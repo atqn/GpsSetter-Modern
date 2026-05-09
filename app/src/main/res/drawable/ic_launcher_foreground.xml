@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8"?>
+<vector xmlns:android="http://schemas.android.com/apk/res/android"
+    android:width="108dp"
+    android:height="108dp"
+    android:viewportWidth="108"
+    android:viewportHeight="108">
+
+    <!-- M letter (white bold strokes) -->
+    <path
+        android:fillColor="#00000000"
+        android:strokeColor="#FFFFFFFF"
+        android:strokeWidth="6.5"
+        android:strokeLineCap="round"
+        android:strokeLineJoin="round"
+        android:pathData="M 20,72 L 20,40 L 30,55 L 40,40 L 40,72"/>
+
+    <!-- y letter with slanted descender -->
+    <path
+        android:fillColor="#00000000"
+        android:strokeColor="#FFFFFFFF"
+        android:strokeWidth="6.5"
+        android:strokeLineCap="round"
+        android:strokeLineJoin="round"
+        android:pathData="M 44,46 L 53,66 M 60,46 L 53,66 L 47,84"/>
+
+    <!-- Orange teardrop pin -->
+    <path
+        android:fillColor="#FFFF6B35"
+        android:pathData="M 73,30 C 65,30 58,37 58,46 C 58,58 73,82 73,82 C 73,82 88,58 88,46 C 88,37 81,30 73,30 Z"/>
+
+    <!-- Inner white dot -->
+    <path
+        android:fillColor="#FFFFFFFF"
+        android:pathData="M 73,46 m -5,0 a 5,5 0 1,0 10,0 a 5,5 0 1,0 -10,0"/>
+</vector>

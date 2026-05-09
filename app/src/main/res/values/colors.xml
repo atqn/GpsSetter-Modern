@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- Brand: charcoal background + orange pin accent. -->
+    <color name="background">@android:color/white</color>
+
+    <!-- Charcoal primary for app bars / headers. -->
+    <color name="primary">#2C2C2E</color>
+    <color name="primary_dark">#1F1F22</color>
+    <color name="primary_light">#5A5A5E</color>
+
+    <!-- Orange accent (matches the launcher pin). -->
+    <color name="accent">#FF6B35</color>
+    <color name="accent_dark">#E0541C</color>
+
+    <color name="white">#FFFFFFFF</color>
+
+    <color name="toolbar_dark">#1F1F22</color>
+    <color name="toolbar">@android:color/white</color>
+    <color name="search_box_background">#F5F5F5</color>
+    <color name="toolbar_overflow">@android:color/black</color>
+
+</resources>

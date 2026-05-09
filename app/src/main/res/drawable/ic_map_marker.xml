@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<vector xmlns:android="http://schemas.android.com/apk/res/android"
+    android:width="40dp"
+    android:height="56dp"
+    android:viewportWidth="40"
+    android:viewportHeight="56">
+
+    <!-- Subtle dark outline for visibility on both light streets and dark satellite -->
+    <path
+        android:fillColor="#33000000"
+        android:pathData="M20,2 C9.5,2 1.5,10 1.5,19 C1.5,36 20,54 20,54 C20,54 38.5,36 38.5,19 C38.5,10 30.5,2 20,2 Z"/>
+
+    <!-- Brand orange pin body -->
+    <path
+        android:fillColor="#FFFF6B35"
+        android:pathData="M20,4 C10,4 3,12 3,20 C3,36 20,52 20,52 C20,52 37,36 37,20 C37,12 30,4 20,4 Z"/>
+
+    <!-- White inner dot -->
+    <path
+        android:fillColor="#FFFFFFFF"
+        android:pathData="M20,20 m-6,0 a6,6 0 1,0 12,0 a6,6 0 1,0 -12,0"/>
+</vector>

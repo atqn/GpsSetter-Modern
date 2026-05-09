@@ -1,0 +1,100 @@
+# Changelog
+
+All notable changes to this fork are documented here. The upstream project is
+[Android1500/GpsSetter](https://github.com/Android1500/GpsSetter) released
+under GPL-3.0.
+
+## [1.4.0] — Rebrand and preset-driven movement UI
+
+### Branding
+- App renamed **my Lo**, applicationId switched to
+  `com.gne9an1.mylo`. The Kotlin/Java package stays
+  `com.android1500.gpssetter.*` so the existing Xposed entry point and
+  shared-prefs paths continue to work without source-tree shuffling.
+- Brand-new adaptive launcher icon (vector). Concentric radar rings on
+  a dark→cyan gradient, monochrome variant supplied for themed icons.
+  The default green-robot debug icon and `ic_launcher-playstore.png`
+  artefacts were removed.
+- Update-checker default `update_repo` is now `gne9an1/GpsSetter-Modern`
+  so the in-app banner points at the fork's releases instead of upstream.
+
+### Movement settings — preset-first UI
+- Replaced the "Random position" toggle plus two free-form number
+  inputs (radius / max speed) with a single dropdown listing realistic
+  presets:
+  - Stationary
+  - Limited movement — 3 m
+  - Medium movement — 10 m
+  - Wide movement — 30 m
+  - Very wide movement — 50 m
+  - Advanced (custom)
+- Each preset bundles radius + max speed + a realistic base accuracy
+  (e.g. 8 m for stationary, 15 m for whole-building). Indoor presets
+  use a tighter accuracy than outdoor ones.
+- `Advanced (custom)` reveals the radius / speed / accuracy fields;
+  hidden otherwise so the basic UI stays a single setting.
+- `Xshare` exposes resolved `isMovementEnabled`, `effectiveRadius`,
+  `effectiveMaxSpeed`, `effectiveAccuracy` so `XposedHook` reads one
+  consistent set of values across processes.
+
+### Strings
+- Added Arabic + English strings for every preset name and label.
+- App-name / about-title strings in both locales now use **my Lo**.
+
+## [1.3.0] — Initial fork release
+
+### Added
+- **Realistic movement** simulation. The location performs a slow random
+  walk with momentum, soft boundary repulsion, and intermittent idle
+  periods instead of teleporting to an independent random point every
+  200 ms. Two new settings:
+  - `Movement radius` — max distance the spoofed position can drift from
+    the pin (default **3 m**, tuned for "sitting in a small room").
+  - `Max movement speed` — top speed the simulation may reach (default
+    **0.3 m/s**, comparable to shifting on a chair).
+- Dynamic `accuracy` (±15 % jitter), `speed` and `bearing` reported on
+  the spoofed `Location` so consumers don't see the classic "speed = 0
+  with a moving position" spoofing signature.
+- Hooks for `Location.getSpeed` and `Location.getBearing` (the upstream
+  module only hooked lat/lng/accuracy).
+- Multi-signature hooks for `LocationManagerService.getLastLocation`
+  covering Android 8.1 through 16. Each signature is attempted inside
+  `try/catch` so the module never crashes the system server when a
+  signature is absent on a given Android version.
+- Arabic (`values-ar`) localisation.
+- GitHub Actions workflow building a debug APK on every push and a
+  release APK on tag.
+
+### Changed
+- `compileSdk` / `targetSdk` bumped from **33 → 36** (Android 16).
+- Android Gradle Plugin **7.3.1 → 8.7.2**, Kotlin **1.7.20 → 2.0.21**,
+  Gradle wrapper **7.5.1 → 8.9**, Java **1.8 → 17**.
+- Modernised every dependency (Hilt 2.52, Room 2.6.1, Material 1.12,
+  Maps 19.0, AppCompat 1.7, Activity 1.9, Lifecycle 2.8, Datastore 1.1,
+  Retrofit 2.11, …).
+- Self-hook class renamed `XposedSelfHooks` → `EnvCheck` and methods
+  `isXposedModuleEnabled` / `getXSharedPrefsPath` →
+  `getCheckedState` / `getCachedPath`. Removes the obvious
+  Xposed/module/hook keywords from the bytecode for trivial signature
+  scanners.
+- `Xshare` now caches the `XSharedPreferences` instance and calls
+  `reload()` on each access so settings changes propagate to hooked
+  processes without recreating the object on every getter.
+- Tick rate of the simulation is **1 Hz** (matches real GPS) instead of
+  the previous 5 Hz, which made the location obviously synthetic.
+
+### Removed
+- **StartApp ads SDK** (`com.startapp:inapp-sdk`) and every related
+  reference: manifest meta-data, banner layout, `App.kt`
+  initialisation block.
+- Unused `READ_EXTERNAL_STORAGE` and
+  `BIND_GET_INSTALL_REFERRER_SERVICE` permissions.
+- Malformed `<queries>` block inside the permissions section of the
+  manifest.
+
+### Compatibility
+- **Android:** 8.1 (API 27) → 16 (API 36).
+- **Xposed framework:** original `de.robv.android.xposed:api:82` —
+  works on Vector, LSPosed, EdXposed and original Xposed.
+- **Vector / LSPosed Canary** is required on Android 16; LSPosed Stable
+  does not support 16.

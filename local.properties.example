@@ -1,0 +1,11 @@
+# Copy this file to local.properties and fill in the values below.
+# local.properties is in .gitignore — never commit it.
+
+# Path to your Android SDK install (Android Studio writes this for you).
+# sdk.dir=/Users/you/Library/Android/sdk
+
+# Google Maps API key — required for the map screen at runtime.
+# Get one (free) from https://console.cloud.google.com/google/maps-apis/credentials
+# Restrict it to the package "com.android1500.gpssetter" and your debug
+# keystore SHA-1 in the Cloud Console.
+MAPS_API_KEY=YOUR_KEY_HERE

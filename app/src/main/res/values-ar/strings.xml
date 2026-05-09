@@ -1,0 +1,63 @@
+<resources>
+    <string name="app_name">my Lo</string>
+    <string name="search">بحث</string>
+
+    <!-- Errors -->
+    <string name="error_xposed_module_missing">وحدة Xposed غير مفعّلة</string>
+    <string name="error_xposed_module_missing_desc">فعّل هذه الوحدة من تطبيق LSPosed Manager.\n\nإذا لم يكن لديك LSPosed:\n\t1. ثبّت وحدة Riru أو Zygisk من Magisk Manager\n\t2. ثبّت وحدة "Riru أو Zygisk - LSPosed" من Magisk Manager\n\t3. افتح التطبيق مرة أخرى</string>
+    <string name="error_missing_root">لا يوجد صلاحية روت</string>
+
+    <string name="record_saved">حُفِظ</string>
+
+    <string name="add_favourite">إضافة للمفضلة</string>
+    <string name="rename_favourite">إعادة تسمية</string>
+    <string name="favourites">المفضلة</string>
+    <string name="address_not_found">العنوان غير موجود</string>
+
+    <!-- About -->
+    <string name="about">حول التطبيق</string>
+    <string name="about_info">تطبيق يغيّر موقع جهازك إلى أي مكان تختاره، بدون تفعيل خيار "المواقع الوهمية" في إعدادات المطوّر.</string>
+    <string name="about_developer_label">تطوير</string>
+    <string name="about_developer_name">أبو عمر</string>
+
+    <!-- Update -->
+    <string name="update_button">تحديث</string>
+    <string name="update_available">يوجد تحديث جديد</string>
+    <string name="bs_update_download_failed">فشل التحميل</string>
+
+    <string name="cant_save">تعذّر الحفظ</string>
+    <string name="location_set">تم تعيين الموقع</string>
+    <string name="location_unset">تم إلغاء الموقع</string>
+    <string name="no_internet">لا يوجد اتصال بالإنترنت</string>
+    <string name="search_hint">"ابحث: مثلاً الرياض أو 24.7136,46.6753"</string>
+
+    <!-- SettingActivity -->
+    <string name="xposed">إعدادات الموقع</string>
+    <string name="settings">الإعدادات</string>
+    <string name="settings_of_accuracy">دقة الموقع (متر)</string>
+    <string name="preference_category_general">عام</string>
+    <string name="enter_valid_input">أدخل رقماً صحيحاً</string>
+    <string name="delete_favourite_item">حذف من المفضلة</string>
+    <string name="title_activity_settings">الإعدادات</string>
+    <string name="dark_theme">الوضع الليلي</string>
+
+    <string name="add_fav_dialog_title">إضافة للمفضلة</string>
+    <string name="dialog_button_add">إضافة</string>
+    <string name="dialog_button_ok">حسناً</string>
+
+    <!-- Map and updates -->
+    <string name="map_type_title">شكل الخريطة</string>
+    <string name="check_for_updates_title">البحث عن تحديثات</string>
+    <string name="check_for_updates_summary">نتحقّق تلقائياً من وجود نسخة أحدث على GitHub</string>
+    <string name="advance_hook">تعزيز التزييف على مستوى النظام</string>
+    <string name="advance_hook_summary">يجبر التطبيقات على قراءة الموقع المزيّف حتى لو طلبت من النظام مباشرة. فعّله فقط إذا لاحظت أن أحد التطبيقات يتجاهل التزييف.</string>
+
+    <!-- Realistic movement -->
+    <string name="realistic_movement_title">حركة واقعية</string>
+    <string name="realistic_movement_summary">محاكاة حركة طبيعية صغيرة حول الموقع المختار بسرعة وانحراف واقعيين</string>
+    <string name="movement_mode_title">نمط الحركة</string>
+    <string name="movement_radius_title">نصف قطر الحركة</string>
+    <string name="movement_radius_summary">أقصى مسافة يبتعدها الموقع عن النقطة المختارة (بالأمتار)</string>
+    <string name="movement_speed_title">السرعة القصوى للحركة</string>
+    <string name="movement_speed_summary">أعلى سرعة تستخدمها المحاكاة (م/ث). 0.3 ≈ تحرّك على الكرسي · 1.0 ≈ مشي بطيء · 1.4 ≈ مشي طبيعي</string>
+</resources>

@@ -1,0 +1,84 @@
+<resources>
+    <string name="app_name">my Lo</string>
+    <string name="title_activity_maps">MapsActivity</string>
+    <string name="xposed_desc">Set location</string>
+    <string name="search">Search</string>
+
+
+    <!-- Errors -->
+    <string name="error_xposed_module_missing">Xposed module is not enabled</string>
+    <string name="error_xposed_module_missing_desc">Enable this module in LSPosed Manager.\n\nDon’t have LSPosed?\n\t1. Install the Riru or Zygisk module from Magisk Manager\n\t2. Install the “Riru or Zygisk - LSPosed” module from Magisk Manager\n\t3. Open this app again</string>
+    <string name="error_missing_root">No root access</string>
+    <string name="error_missing_root_desc">Root access is necessary in order for this app to manage overlays and work properly.</string>
+
+    <string name="record_saved">Save</string>
+
+
+    <string name="address">United States</string>
+    <string name="add_favourite">Add favourite</string>
+    <string name="Search">search</string>
+    <string name="rename_favourite">Rename favourite</string>
+    <string name="add_fav_in_database">Add fav in database</string>
+    <string name="show_fav_list">Show fav list</string>
+    <string name="favourites">Favourites</string>
+    <string name="address_not_found">Address not found</string>
+
+
+    <!-- About -->
+
+    <string name="about">About</string>
+    <string name="about_tittle">my Lo</string>
+    <string name="about_info">A module which will set your location where you want without enable mock location.</string>
+    <string name="about_developer_label">Developer</string>
+    <string name="about_developer_name">Abu Omar</string>
+
+    <!-- Update -->
+
+    <string name="download_manager_description">Downloading update…</string>
+    <string name="update_button">Update</string>
+    <string name="update_available">Update available</string>
+    <string name="bs_update_download_failed">Failed</string>
+
+
+    <string name="cant_save">Can\'t save</string>
+    <string name="location_set">Location set</string>
+    <string name="title">Location set notification</string>
+    <string name="des">Show notification when location will set</string>
+
+    <string name="dialog_button_ok">OK</string>
+
+    <string name="add_fav_dialog_title">Add favourite</string>
+    <string name="dialog_button_add">Add</string>
+    <string name="location_unset">Location unset</string>
+    <string name="no_internet">No internet</string>
+    <string name="search_hint">"search eg. new york or 37.7749,-122.4194"</string>
+
+    <!-- SettingActivity -->
+
+    <string name="xposed">Xposed</string>
+    <string name="advance_hook">Hook system location</string>
+    <string name="settings">Settings</string>
+    <string name="settings_of_accuracy">Accuracy</string>
+    <string name="preference_category_general">General</string>
+    <string name="enter_valid_input">Enter valid number</string>
+    <string name="delete_favourite_item">Delete favourite</string>
+    <string name="title_activity_settings">Settings</string>
+    <string name="dark_theme">Dark theme</string>
+
+    <!-- Map and updates -->
+    <string name="map_type_title">Map style</string>
+    <string name="check_for_updates_title">Check for updates</string>
+    <string name="check_for_updates_summary">Check Github for newer versions</string>
+    <string name="advance_hook_summary">Force apps to read the spoofed location even if they ask the system directly. Enable only if a target app ignores the basic spoofing.</string>
+
+    <!-- Realistic movement -->
+    <string name="realistic_movement_title">Realistic movement</string>
+    <string name="realistic_movement_summary">Simulates small natural movement around the set location with realistic speed and drift</string>
+    <string name="movement_mode_title">Movement mode</string>
+    <string name="movement_radius_title">Movement radius</string>
+    <string name="movement_radius_summary">Max distance the spoofed position can drift from your pin (meters)</string>
+    <string name="movement_speed_title">Max movement speed</string>
+    <string name="movement_speed_summary">Highest speed used by the simulation (m/s). 0.3 ≈ shifting on a chair · 1.0 ≈ slow walk · 1.4 ≈ normal walk</string>
+
+
+</resources>
