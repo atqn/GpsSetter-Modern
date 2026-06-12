@@ -70,6 +70,17 @@
 
     </PreferenceCategory>
 
+    <PreferenceCategory app:title="@string/stealth_category">
+
+        <CheckBoxPreference
+            android:title="@string/hide_from_apps"
+            android:summary="@string/hide_from_apps_summary"
+            android:key="hide_from_apps"
+            android:defaultValue="true"
+            android:icon="@drawable/ic_advance_hook" />
+
+    </PreferenceCategory>
+
 
 
 

@@ -30,6 +30,7 @@ object PrefManager   {
     private const val MAP_TYPE = "map_type"
     private const val DARK_THEME = "dark_theme"
     private const val DISABLE_UPDATE = "disable_update"
+    private const val HIDE_FROM_APPS = "hide_from_apps"
 
     /**
      * Movement-mode presets. Keep in sync with values/arrays.xml
@@ -110,6 +111,13 @@ object PrefManager   {
     var disableUpdate: Boolean
         get() = pref.getBoolean(DISABLE_UPDATE, false)
         set(value) = pref.edit().putBoolean(DISABLE_UPDATE, value).apply()
+
+    var hideFromApps: Boolean
+        get() = pref.getBoolean(HIDE_FROM_APPS, true)
+        set(value) {
+            pref.edit().putBoolean(HIDE_FROM_APPS, value).apply()
+            runInBackground { makeWorldReadable() }
+        }
 
 
 

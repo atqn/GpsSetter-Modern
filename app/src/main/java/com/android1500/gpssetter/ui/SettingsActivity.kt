@@ -34,6 +34,7 @@ class SettingsActivity : AppCompatActivity() {
             return when (key) {
                 "isHookedSystem" -> PrefManager.isHookSystem
                 "disable_update" -> PrefManager.disableUpdate
+                "hide_from_apps" -> PrefManager.hideFromApps
                 else -> throw IllegalArgumentException("Invalid key $key")
             }
         }
@@ -42,6 +43,7 @@ class SettingsActivity : AppCompatActivity() {
             return when (key) {
                 "isHookedSystem" -> PrefManager.isHookSystem = value
                 "disable_update" -> PrefManager.disableUpdate = value
+                "hide_from_apps" -> PrefManager.hideFromApps = value
                 else -> throw IllegalArgumentException("Invalid key $key")
             }
         }

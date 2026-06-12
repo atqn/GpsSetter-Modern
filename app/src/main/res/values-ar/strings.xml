@@ -52,6 +52,12 @@
     <string name="advance_hook">تعزيز التزييف على مستوى النظام</string>
     <string name="advance_hook_summary">يجبر التطبيقات على قراءة الموقع المزيّف حتى لو طلبت من النظام مباشرة. فعّله فقط إذا لاحظت أن أحد التطبيقات يتجاهل التزييف.</string>
 
+    <!-- Stealth -->
+    <string name="stealth_category">الإخفاء</string>
+    <string name="hide_from_apps">إخفاء عن التطبيقات الأخرى</string>
+    <string name="hide_from_apps_summary">يحذف هذا التطبيق من قائمة التطبيقات المثبّتة التي تراها التطبيقات الأخرى، فلا تقدر برامج الفحص تلقاه بالاسم. تبقى أيقونة التطبيق ظاهرة في القائمة.</string>
+
+
     <!-- Realistic movement -->
     <string name="realistic_movement_title">حركة واقعية</string>
     <string name="realistic_movement_summary">محاكاة حركة طبيعية صغيرة حول الموقع المختار بسرعة وانحراف واقعيين</string>

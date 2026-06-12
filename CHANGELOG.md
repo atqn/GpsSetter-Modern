@@ -4,6 +4,87 @@ All notable changes to this fork are documented here. The upstream project is
 [Android1500/GpsSetter](https://github.com/Android1500/GpsSetter) released
 under GPL-3.0.
 
+## [1.11.2] — Legible dialog buttons
+
+### UI
+- Dialog buttons (Search, Add, OK / Cancel, the preference input dialogs…)
+  were drawn in the charcoal `colorPrimary`, which is almost invisible on the
+  dark dialog surface. They now use the brand orange (`#FF6B35`) so they read
+  clearly. Applied once at the theme level via `materialAlertDialogTheme` and
+  `alertDialogTheme`, so it covers every dialog in the app — Material and
+  AppCompat (androidx preference) alike. Strings/behaviour unchanged.
+
+## [1.11.1] — Build toolchain refresh
+
+### Tooling (no behaviour change)
+- Moved to the latest **stable** build stack, deliberately staying on the
+  AGP 8.x line: jumping to AGP 9 would force a Hilt 2.59+ / Gradle 9 / new-DSL
+  migration that several of our plugins (Maps secrets plugin, Hilt) are not
+  ready for yet — a needless stability risk for an identical APK.
+  - Android Gradle Plugin **8.7.2 → 8.9.1**
+  - Gradle wrapper **8.9 → 8.11.1**
+  - Kotlin **2.0.21 → 2.1.0**
+  - Hilt **2.52 → 2.56**
+  - Room **2.6.1 → 2.7.1** (2.6.1's bundled metadata reader cannot parse
+    Kotlin 2.1 class metadata)
+  - androidx.core-ktx **1.13.1 → 1.15.0**
+- No source or runtime changes; the spoofing, GNSS and stealth behaviour is
+  byte-for-byte the same. Verified green through CI.
+
+## [1.11.0] — Hide module from package enumeration
+
+### Stealth
+- **Hide from other apps** (new setting, on by default). While active, the
+  module removes our own package from the installed-app lists any other app
+  can read, so a detector can no longer fingerprint the module by enumerating
+  packages or probing for it by name:
+  - `getInstalledPackages` / `getInstalledApplications` — our entry is stripped
+    from the returned list.
+  - `getPackageInfo` / `getApplicationInfo` — a look-up by our package name
+    throws `NameNotFoundException`, i.e. reports "not installed".
+  - `getLaunchIntentForPackage` — returns `null` for our package.
+  - All hooks use `XposedBridge.hookAllMethods` so every overload (including
+    the Android 13+ `PackageInfoFlags` variants) is covered, each guarded by
+    `try/catch`.
+- **The launcher icon is intentionally left visible.** Launchers resolve apps
+  through `LauncherApps` / `queryIntentActivities`, which we do not touch — the
+  goal is invisibility to detection scanners, not to the device owner.
+- Scope: the hook is skipped in our own process and in the system server
+  (`android`), both of which must keep seeing the package for the module and
+  its shared prefs to function.
+- Exposed via `PrefManager.hideFromApps` and `Xshare.isHideFromApps`; toggle
+  lives under a new **Stealth** settings category (EN + AR strings).
+
+## [1.10.0] — Synthetic GNSS constellation
+
+### Stealth / realism
+- **Fabricated satellite constellation.** While spoofing is active the module
+  now feeds any `android.location.GnssStatus` consumer a synthetic set of
+  9–14 satellites (GPS / GLONASS / Galileo / BeiDou) with believable C/N0,
+  azimuth, elevation and `usedInFix` flags. Previously a faked fix was backed
+  by **zero satellites** — a clear mismatch with a valid GPS location and one
+  of the easiest spoofing tells for a detector to check.
+  - New `GnssSim` helper regenerates the constellation on a slow (~30 s)
+    cadence so repeated reads stay stable while the set still drifts over
+    time. C/N0 carries a small per-read jitter so signal strengths never look
+    frozen.
+  - Hooks `getSatelliteCount`, `getSvid`, `getConstellationType`,
+    `getCn0DbHz`, `getAzimuthDegrees`, `getElevationDegrees`, `usedInFix`,
+    `hasAlmanacData` and `hasEphemerisData`. Each hook is wrapped in
+    `try/catch` so an absent method on a given ROM never breaks the others.
+- The synthetic-location path now stamps `elapsedRealtimeNanos` when it builds
+  a fresh `Location` (the no-origin branch of the `Location.set` hook), keeping
+  the fix's monotonic timestamp consistent with the system clock.
+
+### Known limitations
+- Only the modern `GnssStatus` API is covered. The legacy `GpsStatus` /
+  `addGpsStatusListener` path (used by some pre-API-24 apps) is not yet
+  fabricated. Raw `OnNmeaMessageListener` / `GnssMeasurements` callbacks are
+  also untouched — candidates for a later release.
+
+> Versions **1.5.0 – 1.9.1** were incremental branding, custom map-marker and
+> CI signed-release changes that were not captured here individually.
+
 ## [1.4.0] — Rebrand and preset-driven movement UI
 
 ### Branding

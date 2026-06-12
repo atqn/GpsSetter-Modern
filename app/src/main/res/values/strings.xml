@@ -71,6 +71,12 @@
     <string name="check_for_updates_summary">Check Github for newer versions</string>
     <string name="advance_hook_summary">Force apps to read the spoofed location even if they ask the system directly. Enable only if a target app ignores the basic spoofing.</string>
 
+    <!-- Stealth -->
+    <string name="stealth_category">Stealth</string>
+    <string name="hide_from_apps">Hide from other apps</string>
+    <string name="hide_from_apps_summary">Remove this app from the installed-apps list that other apps can read, so detection scanners can\'t find it by package name. The launcher icon stays visible.</string>
+
+
     <!-- Realistic movement -->
     <string name="realistic_movement_title">Realistic movement</string>
     <string name="realistic_movement_summary">Simulates small natural movement around the set location with realistic speed and drift</string>
