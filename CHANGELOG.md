@@ -15,6 +15,8 @@ under GPL-3.0.
   - Gradle wrapper **8.9 → 8.11.1**
   - Kotlin **2.0.21 → 2.1.0**
   - Hilt **2.52 → 2.56**
+  - Room **2.6.1 → 2.7.1** (2.6.1's bundled metadata reader cannot parse
+    Kotlin 2.1 class metadata)
   - androidx.core-ktx **1.13.1 → 1.15.0**
 - No source or runtime changes; the spoofing, GNSS and stealth behaviour is
   byte-for-byte the same. Verified green through CI.
