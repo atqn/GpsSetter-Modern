@@ -3,6 +3,9 @@ package com.android1500.gpssetter.xposed
 import android.app.AndroidAppHelper
 import android.app.PendingIntent
 import android.content.Context
+import android.content.pm.ApplicationInfo
+import android.content.pm.PackageInfo
+import android.content.pm.PackageManager
 import android.location.Location
 import android.location.LocationManager
 import android.os.Build
@@ -72,6 +75,66 @@ class XposedHook : IXposedHookLoadPackage {
         hookLocationGetters(lpparam)
         hookLocationSet(lpparam)
         hookGnssStatus(lpparam)
+        hookHideFromApps(lpparam)
+    }
+
+    /**
+     * Hides our own package from the installed-app lists that other apps can
+     * read, so a detector cannot fingerprint the module by enumerating
+     * packages or probing for it by name. The launcher icon is unaffected:
+     * launchers resolve it through a different API ([android.content.pm.LauncherApps] /
+     * `queryIntentActivities`), which we deliberately leave alone.
+     *
+     * Scoped out of our own process and the system server — both need to see
+     * the package for the module and its prefs to keep working.
+     */
+    private fun hookHideFromApps(lpparam: XC_LoadPackage.LoadPackageParam) {
+        val packageName = lpparam.packageName ?: return
+        if (packageName == BuildConfig.APPLICATION_ID || packageName == "android") return
+        if (!settings.isHideFromApps) return
+
+        val self = BuildConfig.APPLICATION_ID
+        val pmClass = try {
+            XposedHelpers.findClass("android.app.ApplicationPackageManager", lpparam.classLoader)
+        } catch (_: Throwable) {
+            return
+        }
+
+        // Strip our entry from enumerated package / application lists.
+        val listFilter = object : XC_MethodHook() {
+            override fun afterHookedMethod(param: MethodHookParam) {
+                val result = param.result as? List<*> ?: return
+                val filtered = result.filter { item ->
+                    when (item) {
+                        is PackageInfo -> item.packageName != self
+                        is ApplicationInfo -> item.packageName != self
+                        else -> true
+                    }
+                }
+                if (filtered.size != result.size) param.result = filtered
+            }
+        }
+        try { XposedBridge.hookAllMethods(pmClass, "getInstalledPackages", listFilter) } catch (_: Throwable) { }
+        try { XposedBridge.hookAllMethods(pmClass, "getInstalledApplications", listFilter) } catch (_: Throwable) { }
+
+        // Direct look-ups by name report the package as not installed.
+        val notFound = object : XC_MethodHook() {
+            override fun beforeHookedMethod(param: MethodHookParam) {
+                if ((param.args.getOrNull(0) as? String) == self) {
+                    param.throwable = PackageManager.NameNotFoundException(self)
+                }
+            }
+        }
+        try { XposedBridge.hookAllMethods(pmClass, "getPackageInfo", notFound) } catch (_: Throwable) { }
+        try { XposedBridge.hookAllMethods(pmClass, "getApplicationInfo", notFound) } catch (_: Throwable) { }
+
+        try {
+            XposedBridge.hookAllMethods(pmClass, "getLaunchIntentForPackage", object : XC_MethodHook() {
+                override fun beforeHookedMethod(param: MethodHookParam) {
+                    if ((param.args.getOrNull(0) as? String) == self) param.result = null
+                }
+            })
+        } catch (_: Throwable) { }
     }
 
     /**

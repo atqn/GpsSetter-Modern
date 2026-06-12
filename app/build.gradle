@@ -7,7 +7,7 @@ plugins {
     id 'kotlin-parcelize'
 }
 
-def tagName = 'v1.10.0'
+def tagName = 'v1.11.0'
 
 // Update-checker target. Change this to your fork ("owner/repo") so the
 // in-app update banner points at your own GitHub releases instead of
@@ -20,8 +20,8 @@ android {
         applicationId "com.gne9an1.mylo"
         minSdk 27
         targetSdk 36
-        versionCode 200
-        versionName "1.10.0"
+        versionCode 210
+        versionName "1.11.0"
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
         buildConfigField("String", "TAG_NAME", "\"${tagName}\"")
         buildConfigField("String", "UPDATE_REPO", "\"${updateRepo}\"")

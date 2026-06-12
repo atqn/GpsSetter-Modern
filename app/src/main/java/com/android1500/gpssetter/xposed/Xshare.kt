@@ -26,6 +26,10 @@ class Xshare {
     val isHookedSystem: Boolean
         get() = pref().getBoolean("isHookedSystem", false)
 
+    /** Hide our package from the installed-app lists other apps can read. */
+    val isHideFromApps: Boolean
+        get() = pref().getBoolean("hide_from_apps", true)
+
     /** One of MODE_OFF / MODE_SMALL / MODE_MEDIUM / MODE_WIDE / MODE_VERY_WIDE / MODE_CUSTOM. */
     val movementMode: String
         get() = pref().getString("movement_mode", MODE_SMALL) ?: MODE_SMALL

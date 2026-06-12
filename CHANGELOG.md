@@ -4,6 +4,30 @@ All notable changes to this fork are documented here. The upstream project is
 [Android1500/GpsSetter](https://github.com/Android1500/GpsSetter) released
 under GPL-3.0.
 
+## [1.11.0] — Hide module from package enumeration
+
+### Stealth
+- **Hide from other apps** (new setting, on by default). While active, the
+  module removes our own package from the installed-app lists any other app
+  can read, so a detector can no longer fingerprint the module by enumerating
+  packages or probing for it by name:
+  - `getInstalledPackages` / `getInstalledApplications` — our entry is stripped
+    from the returned list.
+  - `getPackageInfo` / `getApplicationInfo` — a look-up by our package name
+    throws `NameNotFoundException`, i.e. reports "not installed".
+  - `getLaunchIntentForPackage` — returns `null` for our package.
+  - All hooks use `XposedBridge.hookAllMethods` so every overload (including
+    the Android 13+ `PackageInfoFlags` variants) is covered, each guarded by
+    `try/catch`.
+- **The launcher icon is intentionally left visible.** Launchers resolve apps
+  through `LauncherApps` / `queryIntentActivities`, which we do not touch — the
+  goal is invisibility to detection scanners, not to the device owner.
+- Scope: the hook is skipped in our own process and in the system server
+  (`android`), both of which must keep seeing the package for the module and
+  its shared prefs to function.
+- Exposed via `PrefManager.hideFromApps` and `Xshare.isHideFromApps`; toggle
+  lives under a new **Stealth** settings category (EN + AR strings).
+
 ## [1.10.0] — Synthetic GNSS constellation
 
 ### Stealth / realism
