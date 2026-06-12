@@ -4,6 +4,16 @@ All notable changes to this fork are documented here. The upstream project is
 [Android1500/GpsSetter](https://github.com/Android1500/GpsSetter) released
 under GPL-3.0.
 
+## [1.11.2] — Legible dialog buttons
+
+### UI
+- Dialog buttons (Search, Add, OK / Cancel, the preference input dialogs…)
+  were drawn in the charcoal `colorPrimary`, which is almost invisible on the
+  dark dialog surface. They now use the brand orange (`#FF6B35`) so they read
+  clearly. Applied once at the theme level via `materialAlertDialogTheme` and
+  `alertDialogTheme`, so it covers every dialog in the app — Material and
+  AppCompat (androidx preference) alike. Strings/behaviour unchanged.
+
 ## [1.11.1] — Build toolchain refresh
 
 ### Tooling (no behaviour change)

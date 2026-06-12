@@ -9,6 +9,31 @@
         <item name="colorOnPrimary">@color/white</item>
         <item name="android:navigationBarColor">@android:color/transparent</item>
 
+        <!-- Make dialog buttons use the brand orange so they stay legible
+             on the dark dialog surface (the default colorPrimary charcoal
+             is nearly invisible there). -->
+        <item name="materialAlertDialogTheme">@style/ThemeOverlay.GPSSetter.MaterialDialog</item>
+        <item name="alertDialogTheme">@style/ThemeOverlay.GPSSetter.AppCompatDialog</item>
+
+    </style>
+
+    <!-- Orange text buttons shared by every dialog. -->
+    <style name="Widget.GPSSetter.Dialog.Button" parent="Widget.MaterialComponents.Button.TextButton.Dialog">
+        <item name="android:textColor">@color/accent</item>
+    </style>
+
+    <!-- For dialogs built with MaterialAlertDialogBuilder (search, favourites, update…). -->
+    <style name="ThemeOverlay.GPSSetter.MaterialDialog" parent="ThemeOverlay.MaterialComponents.MaterialAlertDialog">
+        <item name="buttonBarPositiveButtonStyle">@style/Widget.GPSSetter.Dialog.Button</item>
+        <item name="buttonBarNegativeButtonStyle">@style/Widget.GPSSetter.Dialog.Button</item>
+        <item name="buttonBarNeutralButtonStyle">@style/Widget.GPSSetter.Dialog.Button</item>
+    </style>
+
+    <!-- For AppCompat AlertDialogs, e.g. the androidx preference input dialogs. -->
+    <style name="ThemeOverlay.GPSSetter.AppCompatDialog" parent="ThemeOverlay.MaterialComponents.Dialog.Alert">
+        <item name="buttonBarPositiveButtonStyle">@style/Widget.GPSSetter.Dialog.Button</item>
+        <item name="buttonBarNegativeButtonStyle">@style/Widget.GPSSetter.Dialog.Button</item>
+        <item name="buttonBarNeutralButtonStyle">@style/Widget.GPSSetter.Dialog.Button</item>
     </style>
 
 
