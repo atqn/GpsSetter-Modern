@@ -4,6 +4,21 @@ All notable changes to this fork are documented here. The upstream project is
 [Android1500/GpsSetter](https://github.com/Android1500/GpsSetter) released
 under GPL-3.0.
 
+## [1.11.1] — Build toolchain refresh
+
+### Tooling (no behaviour change)
+- Moved to the latest **stable** build stack, deliberately staying on the
+  AGP 8.x line: jumping to AGP 9 would force a Hilt 2.59+ / Gradle 9 / new-DSL
+  migration that several of our plugins (Maps secrets plugin, Hilt) are not
+  ready for yet — a needless stability risk for an identical APK.
+  - Android Gradle Plugin **8.7.2 → 8.9.1**
+  - Gradle wrapper **8.9 → 8.11.1**
+  - Kotlin **2.0.21 → 2.1.0**
+  - Hilt **2.52 → 2.56**
+  - androidx.core-ktx **1.13.1 → 1.15.0**
+- No source or runtime changes; the spoofing, GNSS and stealth behaviour is
+  byte-for-byte the same. Verified green through CI.
+
 ## [1.11.0] — Hide module from package enumeration
 
 ### Stealth
