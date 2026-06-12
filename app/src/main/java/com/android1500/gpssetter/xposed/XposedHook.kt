@@ -71,6 +71,54 @@ class XposedHook : IXposedHookLoadPackage {
 
         hookLocationGetters(lpparam)
         hookLocationSet(lpparam)
+        hookGnssStatus(lpparam)
+    }
+
+    /**
+     * Feeds a synthetic constellation to any [android.location.GnssStatus]
+     * consumer while spoofing is active. Without this a faked fix reports zero
+     * satellites, which is an obvious mismatch with a valid GPS location.
+     */
+    private fun hookGnssStatus(lpparam: XC_LoadPackage.LoadPackageParam) {
+        val packageName = lpparam.packageName ?: return
+        if (packageName == BuildConfig.APPLICATION_ID) return
+
+        val cls = try {
+            XposedHelpers.findClass("android.location.GnssStatus", lpparam.classLoader)
+        } catch (_: Throwable) {
+            return
+        }
+
+        try {
+            XposedHelpers.findAndHookMethod(cls, "getSatelliteCount", object : XC_MethodHook() {
+                override fun beforeHookedMethod(param: MethodHookParam) {
+                    if (settings.isStarted) param.result = GnssSim.count
+                }
+            })
+        } catch (_: Throwable) { }
+
+        fun hookByIndex(name: String, fn: (Int) -> Any) {
+            try {
+                XposedHelpers.findAndHookMethod(
+                    cls, name, Int::class.javaPrimitiveType,
+                    object : XC_MethodHook() {
+                        override fun beforeHookedMethod(param: MethodHookParam) {
+                            if (!settings.isStarted) return
+                            param.result = fn(param.args[0] as Int)
+                        }
+                    }
+                )
+            } catch (_: Throwable) { }
+        }
+
+        hookByIndex("getSvid") { GnssSim.svid(it) }
+        hookByIndex("getConstellationType") { GnssSim.constellationType(it) }
+        hookByIndex("getCn0DbHz") { GnssSim.cn0(it) }
+        hookByIndex("getAzimuthDegrees") { GnssSim.azimuth(it) }
+        hookByIndex("getElevationDegrees") { GnssSim.elevation(it) }
+        hookByIndex("usedInFix") { GnssSim.usedInFix(it) }
+        hookByIndex("hasAlmanacData") { GnssSim.usedInFix(it) }
+        hookByIndex("hasEphemerisData") { GnssSim.usedInFix(it) }
     }
 
     private fun hookSystemLocationService(lpparam: XC_LoadPackage.LoadPackageParam) {
@@ -196,6 +244,7 @@ class XposedHook : IXposedHookLoadPackage {
                     if (origin == null) {
                         location = Location(LocationManager.GPS_PROVIDER)
                         location.time = System.currentTimeMillis() - rand.nextInt(900) - 100
+                        location.elapsedRealtimeNanos = SystemClock.elapsedRealtimeNanos()
                     } else {
                         location = Location(origin.provider)
                         location.time = origin.time
